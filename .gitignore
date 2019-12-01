@@ -1,3 +1,4 @@
 *.metals
+*.bloop
 project/project
 target
