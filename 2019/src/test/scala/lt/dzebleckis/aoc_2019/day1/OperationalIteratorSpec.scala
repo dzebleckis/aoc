@@ -7,7 +7,6 @@ class OperationalIteratorSpec extends AnyFlatSpec {
   private val hasNext = (o: Int) => o > 0
 
   "OperationalIterator" should "require fuel 2 for module of mass 14" in {
-
     val it = new OperationalIterator[Int](14, operation, hasNext)
     it.drop(1)
     assert(2 === it.sum)
