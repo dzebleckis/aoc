@@ -6,21 +6,21 @@ import {
 import { isByrValid, isHgtValid, isIyrValid, isPidValid } from "./index.ts";
 
 Deno.test("valid byr", () => {
-  const data = ["2002", "1920 ", "2000"];
+  const data = ["2002", "1920", "2000"];
   for (const input of data) {
     assertEquals(isByrValid(input), true, input);
   }
 });
 
 Deno.test("not valid byr", () => {
-  const data = ["2003", "1919 ", "2010", "02002"];
+  const data = ["2003", "1919", "2010", "02002"];
   for (const input of data) {
     assertEquals(isByrValid(input), false, input);
   }
 });
 
 Deno.test("valid iyr", () => {
-  const data = ["2010", "2020 "];
+  const data = ["2010", "2020"];
   for (const input of data) {
     assertEquals(isIyrValid(input), true, input);
   }
