@@ -5,17 +5,20 @@ import java.nio.file.Files
 enum Move:
   case Rock, Scissors, Paper
 
+type OponentMove = Move
+type MyMove = Move
+
 enum Outcome:
   case Win, Lose, Drawn
 
-type Game = (Move, Move)
+type Game = (MyMove, OponentMove)
 
 val content =
   Source
-  .fromFile(s"./${args.toSeq.head}")
-  .getLines()
-  .map(_.split(" "))
-  .toSeq
+    .fromFile(s"./${args.toSeq.head}")
+    .getLines()
+    .map(_.split(" "))
+    .toSeq
 
 def victory(game: Game) =
   game match
@@ -25,7 +28,7 @@ def victory(game: Game) =
     case _                           => false
 
 def calculate(game: Game) =
-  val additional = game._1 match
+  val additional = game.head match
     case Move.Rock     => 1
     case Move.Paper    => 2
     case Move.Scissors => 3
