@@ -7,7 +7,7 @@ val content =
     .lines(Paths.get(".", args.toSeq.head))
     .toScala(List)
 
-def priority(c: Char): Int =
+def calculatePriority(c: Char): Int =
   if (c <= 'Z') then c - 'A' + 27
   else c - 'a' + 1
 
@@ -15,18 +15,19 @@ def findBadge(group: Iterable[String]): Char =
   // there migth be more than 1 same letter, lets take first one
   group.reduce(_.intersect(_)).head
 
-val result1 = content
-  .map(s => s.splitAt(s.length / 2))
-  .map(p => findBadge(List(p(0), p(1))))
-  .map(priority)
-  .sum
+def solution(groups: Iterable[Iterable[String]]): Int =
+  groups
+    .map(findBadge)
+    .map(calculatePriority)
+    .sum
 
-println(s"Pat1 ${result1}")
+val part1 = content
+  .map(s => s.splitAt(s.length / 2).toList)
 
-val result2 = content
+println(s"Pat1 ${solution(part1)}")
+
+val part2 = content
   .grouped(3)
-  .map(findBadge)
-  .map(priority)
-  .sum
+  .toSeq
 
-println(s"Pat2 ${result2}")
+println(s"Pat2 ${solution(part2)}")
