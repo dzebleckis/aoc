@@ -1,6 +1,4 @@
 import scala.io.Source
-import java.nio.file.Paths
-import java.nio.file.Files
 
 enum Move:
   case Rock, Scissors, Paper
