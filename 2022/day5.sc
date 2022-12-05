@@ -3,7 +3,7 @@ import scala.io.Source
 import scala.collection.mutable.{Seq, Map}
 
 val table = Map.empty[Int, Seq[String]]
-val instructions = raw"move (\d+) from (\d+) to (\d+)".r
+val instruction = raw"move (\d+) from (\d+) to (\d+)".r
 
 val content =
   Source
@@ -14,6 +14,7 @@ val part = args.toSeq.last.trim
 
 if part != "1" && part != "2" then
   throw Exception(s"Part number not valid: $part")
+
 println(s"Executing part $part")
 
 content
@@ -33,7 +34,7 @@ content
 
 content.foreach(line =>
   line match
-    case instructions(countS, fromS, toS) =>
+    case instruction(countS, fromS, toS) =>
       val count = countS.toInt
       val from = fromS.toInt
       val to = toS.toInt
