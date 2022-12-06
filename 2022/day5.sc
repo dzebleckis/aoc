@@ -48,8 +48,8 @@ content.foreach(line =>
     case _ => throw Exception(s"Did not recognized $line")
 )
 
-val part1 = table
+val answer = table
   .map((_, s) => s.head.substring(1, 2))
   .mkString("")
 
-println(s"Answer: $part1")
+println(s"Answer: $answer")
