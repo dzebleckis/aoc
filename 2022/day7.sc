@@ -18,9 +18,13 @@ class Directory(
 val stack = Stack.empty[Directory]
 
 def filter(directory: Directory, predicate: (size: Int) => Boolean): Seq[Int] =
-  val result = directory.children.flatMap(d => filter(d, predicate))
+  val result = directory.children.flatMap(filter(_, predicate))
   if predicate(directory.size) then result :+ directory.size
   else result
+
+def print(directory: Directory, depth: Int = 0): Unit = 
+    println(s"""${"-".repeat(depth)} ${directory.name} (dir)""")
+    directory.children.foreach(print(_, depth + 1))
 
 val content = Source
   .fromFile(Paths.get(".", args(0)).toUri())
