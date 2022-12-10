@@ -2,27 +2,20 @@ import scala.collection.mutable
 import java.nio.file.Paths
 import scala.io.Source
 
-case class Tree(val height: Char, val x: Int, val y: Int):
-  override def toString(): String = s"T(h=$height, x=$x, y=$y)"
-
 enum Direction:
   case Left
   case Right
   case Down
   case Up
 
-type Forest = mutable.Map[Int, IndexedSeq[Tree]]
+type Forest = mutable.Map[Int, IndexedSeq[Char]]
 val forest: Forest = mutable.Map.empty
 
 val content = Source
   .fromFile(Paths.get(".", args(0)).toUri())
   .getLines
   .zipWithIndex
-  .foreach((line, x) =>
-    val trees = line.zipWithIndex
-      .map((height, y) => Tree(height, x, y))
-    forest.put(x, trees)
-  )
+  .foreach((line, x) => forest.put(x, line.toIndexedSeq))
 
 def neighboursGenerator(
     s: Int
@@ -40,22 +33,22 @@ def neighboursGenerator(
       (ix, iy)
   }
 
+def getHeight(p: (Int, Int)): Int = forest(p(1))(p(0)) // x and y are switched
+
 def isVisible(x: Int, y: Int)(direction: Direction): Boolean =
   val tree = forest(y)(x)
-  !neighbours(x, y, direction)
-    .exists((x, y) => forest(y)(x).height >= tree.height)
+  !neighbours(x, y, direction).exists(getHeight(_) >= tree)
 
 def calculateScore(x: Int, y: Int)(direction: Direction): Int =
-  val tree = forest(y)(x)
+  val treeHeight = getHeight((x, y))
   var result = 0
   var found = false
   val it = neighbours(x, y, direction) ++ Seq((-1, -1))
   while !found && it.hasNext do
-    val (x, y) = it.next()
-    if (x == -1) then result -= 1
+    val p = it.next()
+    if (p(0) == -1) then result -= 1 // we reached the edge
     else
-      val current = forest(y)(x)
-      if current.height >= tree.height then found = true;
+      if getHeight(p) >= treeHeight then found = true;
       else result += 1
   result + 1
 
