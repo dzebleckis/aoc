@@ -14,11 +14,10 @@ case class Position(
     distance: Int = Int.MaxValue,
     end: Boolean = false
 ):
-    def diff(other: Position): Int = elevation - other.elevation
+  def diff(other: Position): Int = elevation - other.elevation
 
 val board = Array.ofDim[Position](content.size, content.head.size)
 var startPosition: Position = _
-// var endPosition: Position = _
 
 content.zipWithIndex.foreach((line, idx) =>
   val chars = line.toCharArray()
@@ -63,21 +62,20 @@ def find(
 
   val visited = collection.mutable.Set.empty[(Int, Int)]
   queue += current
-//   println(s"queu: $queue")
+
   while queue.nonEmpty do
     val current = queue.dequeue()
     // println(s"current: $current")
     visited += (current.x -> current.y)
 
-    //if current.end then
-    if isFound(current) then    
-    //   println(s"Found: $current")
+    if isFound(current) then
+      //   println(s"Found: $current")
       return Some(current)
 
     getNeighbours(current).foreach(n =>
       var b = getElement(n)
-      //if !visited.contains(n) && b.elevation - current.elevation <= 1 then
-      if !visited.contains(n) && validMove(b, current) then  
+
+      if !visited.contains(n) && validMove(b, current) then
         val l = current.distance + 1
         if l < b.distance then
           queue = queue.filterNot(p => p.x == b.x && p.y == b.y)
@@ -85,9 +83,11 @@ def find(
     )
   None
 
-val endPosition = find(startPosition, _.end, (next, current) => next.diff(current) <= 1)
+val endPosition =
+  find(startPosition, _.end, (next, current) => next.diff(current) <= 1)
 val e = endPosition.get.copy(distance = 0)
-val optimalStart = find(e, _.elevation == 'a', (next, current) => current.diff(next) <= 1)
+val optimalStart =
+  find(e, _.elevation == 'a', (next, current) => current.diff(next) <= 1)
 
 println(s"Part1: ${endPosition.map(_.distance)}")
 println(s"Part2: ${optimalStart.map(_.distance)}")
