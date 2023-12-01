@@ -35,10 +35,10 @@ def finder(search: (String) => Int) =
 
 val part2 = content
   .map(s => {
-    val left = finder(s.indexOf).minBy(_._1)
-    val right = finder(s.lastIndexOf).maxBy(_._1)
+    val (_, left) = finder(s.indexOf).minBy(_._1)
+    val (_, right) = finder(s.lastIndexOf).maxBy(_._1)
 
-    left._2 * 10 + right._2
+    left * 10 + right
   })
 
 println(s"Part 2: ${part2.sum}")
