@@ -51,7 +51,7 @@ def aboveLimit(cubes: Cubes) =
     case Green => cubes.count > maxGreen
     case Blue  => cubes.count > maxBlue
 
-def notPossiblecheckGameSet(gameSet: GameSet) =
+def notPossibleGameSet(gameSet: GameSet) =
   gameSet.exists(aboveLimit)
 
 def minimumNumberOfCubes(gameSets: Seq[GameSet]): (Int, Int, Int) =
@@ -63,7 +63,7 @@ def minimumNumberOfCubes(gameSets: Seq[GameSet]): (Int, Int, Int) =
   (c1, c2, c3)
 
 val part1 = games
-  .filterNot(game => game.gameSets.exists(notPossiblecheckGameSet))
+  .filterNot(game => game.gameSets.exists(notPossibleGameSet))
   .map(_.id)
 
 println(s"Part1: ${part1.sum}")
