@@ -1,0 +1,9 @@
+*.metals
+*.bloop
+project
+target
+.vscode
+.scala-build
+.bsp
+day*.input
+.idea/
