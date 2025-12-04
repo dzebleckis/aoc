@@ -65,9 +65,7 @@ void main() {
 
     char[][] operationalGrid = makeCopy(grid);
 
-    int part1 = 0;
-
-    part1 = traverse(grid, (i, j) -> {});
+    int part1 = traverse(grid, (i, j) -> {});
 
     IO.println("Part 1: " + part1);
 
