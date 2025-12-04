@@ -20,7 +20,6 @@ Stream<Long> supplyNumbers(Range range) {
 
 void main() {
     var lines = Arrays.stream(Utils.getLines("day2.example")
-                    .toList()
                     .getFirst()
                     .split(","))
             .map(this::toRange)

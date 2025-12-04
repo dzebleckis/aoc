@@ -11,6 +11,7 @@ Rotation parseRotation(String line) {
 void main() {
 
     var lines = Utils.getLines("day1.example")
+            .stream()
             .map(this::parseRotation)
             .toList();
 

@@ -44,6 +44,7 @@ long makeNumber(int[] numbers) {
 
 void main() {
     var lines = Utils.getLines("day3.input")
+            .stream()
             .map(this::parseNumber)
             .toList();
 
