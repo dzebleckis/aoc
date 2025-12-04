@@ -7,3 +7,5 @@ target
 .bsp
 day*.input
 .idea/
+out
+2025.iml
