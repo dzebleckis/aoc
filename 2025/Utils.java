@@ -7,8 +7,16 @@ import java.util.function.Predicate;
 public class Utils {
 
     public static List<String> getLines(String file) {
-        try(var lines = Files.lines(Paths.get(file))) {
+        try (var lines = Files.lines(Paths.get(file))) {
             return lines.filter(Predicate.not(String::isBlank)).toList();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getContent(String file) {
+        try {
+            return Files.readString(Paths.get(file));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

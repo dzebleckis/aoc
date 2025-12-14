@@ -10,37 +10,41 @@ Rotation parseRotation(String line) {
 
 void main() {
 
-    var lines = Utils.getLines("day1.example")
+    var lines = Utils.getLines("day1.input")
             .stream()
             .map(this::parseRotation)
             .toList();
 
     int currentPosition = 50;
     int part1 = 0;
+    int part2 = 0;
 
     for (var line : lines) {
-        currentPosition += line.direction().equals("L") ? -line.distance : line.distance();
+        for (int i = 1; i <= line.distance(); i++) {
+            if (line.direction().equals("L")) {
+                if (currentPosition == 0) {
+                    currentPosition = 99;
+                } else {
+                    currentPosition--;
+                }
+            } else {
+                if (currentPosition == 99) {
+                    currentPosition = 0;
+                } else {
+                    currentPosition++;
+                }
+            }
 
-        if (currentPosition % 100 == 0) {
+            if (currentPosition == 0) {
+                part2++;
+            }
+        }
+        if (currentPosition == 0) {
             part1++;
         }
     }
 
     IO.println("Part1: " + part1);
-
-    currentPosition = 50;
-    int part2 = 0;
-
-    IO.println("Current position: " + currentPosition);
-    for (var line : lines) {
-        currentPosition += line.direction().equals("L") ? -line.distance : line.distance();
-
-        IO.println("Current position: " + currentPosition);
-//        if (currentPosition % 100 == 0) {
-//            part2++;
-//        }
-    }
-
-    IO.println("Part1: " + part2);
+    IO.println("Part2: " + part2);
 }
 
